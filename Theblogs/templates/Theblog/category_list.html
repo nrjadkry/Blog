@@ -1,0 +1,79 @@
+{% extends 'Theblog/base.html' %}
+
+{% block content %}
+
+<h1>Categories</h1>
+
+<div id="div-for-button"><button class="hello" onclick="myFunction()" id="importbutton"> Import Categories</button></div>
+
+<div id="import-box" class="row hidden" >
+    <div class="col-sm-2">
+      <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+        <input type="file" name="myfile">
+    </div>
+    <div class="col-sm-2"> 
+     <button type="submit" id="btnSubmit" class="btn btn-sm btn-primary" formaction="{% url 'import_category' %}">Import </button>
+    </div>
+      </form>
+</div>
+
+  <style type="text/css">
+    #div-for-button{
+      width: 50%;
+      height: 30px;
+      
+      position: absolute;
+    }
+       #import-box{
+      width: 100%;
+      height: 50px;
+     
+      position: absolute;
+    }
+
+  </style>
+
+    <script type="text/javascript"> 
+
+
+  
+ function myFunction() {
+    document.getElementById('import-box').classList.remove('hidden')
+    document.getElementById('importbutton').classList.add('hidden')
+
+
+
+  // document.getElementById('import-box').style.display = "block";
+  // document.getElementById('importbutton').hide()
+}
+    
+    
+
+    </script>
+
+ <br><br>
+  
+
+    
+
+
+  {% if messages %}
+  {% for message in messages  %}
+
+  	<p>{{message}}</p>
+  	
+  {% endfor %}
+  	
+  {% endif %}
+
+<ul>
+
+{% for item in object_list %}
+	<li><a href="{% url 'category' item.name %}">{{item.name}} </a></li>
+
+{% endfor %}
+</ul>
+
+
+{% endblock content %}

@@ -1,0 +1,37 @@
+{% extends 'Theblog/base.html' %}
+
+{% block title %}
+    Update Blog
+{% endblock title %}
+
+{% block content %}
+<style type="text/css">
+	.Firstrow{
+		margin-left: 10px;
+	}
+</style>
+ {% if user.is_authenticated %}
+ 	{% if user.id == post.author.id %}
+		<h1 class="Firstrow">Update this Blog</h1>
+		<br>
+		<div class="row Firstrow">
+			<div class="col-lg-6">
+				<div class="form-group">
+					<form method="POST">
+						{% csrf_token %}
+						{{form.media}}
+					{{form.as_p}}
+					<button name="submit">Update</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	{% else %}
+		<strong>You are restricted here.</strong>
+	{% endif %}
+{% else %}
+<br>
+<strong>You are restricted here.</strong>
+{% endif %}
+
+{% endblock content %}

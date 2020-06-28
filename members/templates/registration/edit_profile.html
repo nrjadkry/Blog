@@ -1,0 +1,31 @@
+{% extends 'Theblog/base.html' %}
+
+{% block title %}
+   Edit Profile
+{% endblock title %}
+
+{% block content %}
+
+<h1 class="Firstrow">Edit Profile</h1>
+<br>
+	<h4>Bio:</h4><h5>{{user.userprofile.bio}}	</h5>
+
+<h4>Profile Picture:</h4>
+
+  <img style="width: 18rem;" class="card-img-top img-circle" src="{{user.userprofile.profile_picture.url}}" alt="Card image cap">
+
+
+<img src="">
+<div class="row Firstrow">
+	<div class="col-lg-6">
+		<div class="form-group">
+			<form method="POST">
+				{% csrf_token %}
+			{{form.as_p}}
+			<button name="submit">Update Profile</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}

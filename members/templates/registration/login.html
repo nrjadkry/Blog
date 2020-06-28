@@ -1,0 +1,35 @@
+{% extends 'Theblog/base.html' %}
+
+{% load socialaccount %}
+{% providers_media_js %}
+
+{% block title %}
+   Login
+{% endblock title %}
+
+{% block content %}
+<style type="text/css">
+	.Firstrow{
+		margin-left: 10px;
+	}
+</style>
+<h1 class="Firstrow">Login</h1>
+<br>
+<div class="row Firstrow">
+	<div class="col-lg-6">
+		<div class="form-group">
+			<form method="POST">
+				{% csrf_token %}
+			{{form.as_p}}
+			<button name="submit">Login</button>
+			</form>
+			<br>
+			<a href="{% provider_login_url "facebook" method="js_sdk" %}" class="col-md-offset-2">
+    OR Login with Facebook
+</a>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}
+

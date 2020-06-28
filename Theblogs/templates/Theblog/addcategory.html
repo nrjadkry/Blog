@@ -1,0 +1,33 @@
+{% extends 'Theblog/base.html' %}
+
+{% block title %}
+    Create new Category
+{% endblock title %}
+
+{% block content %}
+<style type="text/css">
+	.Firstrow{
+		margin-left: 10px;
+	}
+</style>
+ {% if user.is_authenticated %}
+<h1 class="Firstrow">Create new Category</h1>
+<br>
+<div class="row Firstrow">
+	<div class="col-lg-6">
+		<div class="form-group">
+			<form method="POST">
+				{% csrf_token %}
+			{{form.as_p}}
+			<button name="submit">Create</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% else %}
+<br>
+<strong>You are restricted here.</strong>
+{% endif %}
+
+
+{% endblock content %}

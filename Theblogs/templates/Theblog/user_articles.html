@@ -1,0 +1,39 @@
+{% extends 'Theblog/base.html' %}
+
+{% block content %}
+<br>
+<ul>
+	<div class="row">
+		<div class="col-sm-2">
+		
+		</div>
+	
+		<div class="col-sm-5">
+				<form method="GET">
+			<input type="text" name='q' value='{{ request.GET.q }}' class="form-control" placeholder="Search your articles....">
+			
+		</div>
+		<div class="col-sm-3">
+			 <button class="btn btn-sm btn-primary" type='submit'>Search</button>
+			 	</form>
+		</div>
+	
+		<div class="col-sm-2">
+			
+		</div>
+	</div>
+
+<h3>My Articles</h3>
+
+
+{% for post in articles %}
+	{{post.title}} -By: {{post.author}}- <a href="{% url 'category' post.category|slugify %}">{{post.category}}</a> -{{post.published_date}}<br>
+	{{post.snippet}}
+	<a href="{% url 'article_detail' post.id %}">Read more.. </a>
+
+	
+	<hr>
+
+{% endfor %}
+</ul>
+{% endblock content %}

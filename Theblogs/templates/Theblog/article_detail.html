@@ -1,0 +1,60 @@
+{% extends 'Theblog/base.html' %}
+
+{% block title %}
+{{post.title}}
+{% endblock title %}%}
+
+{% block content %}
+<br>
+
+
+<h1>{{post.title}}</h1> <small>By: 
+	{{post.author.first_name}}
+	{{post.author.last_name}} 
+	-Published on: {{post.published_date}}</small>
+
+ {% if user.is_authenticated %}
+
+ <br><br>
+ {% if user.id == post.author.id %} <!-- user.id is the id of logged in user and post.author.id is the id of author id. If they are same then the user can edit post. -->
+<a class="btn btn-primary" href="{% url 'upateblog' post.id %}">Edit</a>
+<a class="btn btn-danger" href="{% url 'deleteblog' post.id %}">Delete</a>
+{% endif %}
+{% endif %}
+<hr>
+
+	{% if post.header_image %}
+	<img src="{{post.header_image.url}}">
+	{% endif %}
+	<br><br>
+
+{{post.body|safe}}
+<hr>
+
+{% if user.is_authenticated %}
+
+<form action="{% url 'like_post' post.pk %}" method="POST">
+	{% csrf_token %}
+
+	{% if liked %}	
+	<button class="btn btn-danger btn-sm" type="submit" name="post_id" value='{{post.id}}'>Unlike</button>
+	{% else %}
+	<button class="btn btn-primary btn-sm" type="submit" name="post_id" value='{{post.id}}'>Like</button>
+
+	{% endif %}
+{% else %}
+          <a href="{% url 'login' %}">Login </a>To Like
+{% endif %}
+-{{total_likes}} Likes
+-{{post.blog_views}} Views
+{# <p>Views: {% get_hit_count for [Post] %}</p> #}
+{# -<p>{% get_hit_count  for [post] %} View</p> #}
+
+	
+</form>
+<hr>
+<a class="btn btn-secondary" href="{% url 'home' %}">BACK</a>
+<br>
+<br>
+
+{% endblock content %}
