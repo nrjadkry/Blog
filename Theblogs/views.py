@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post, Categories
+from .models import Post, Categories, Comment
 from django.views.generic import ListView, DetailView, CreateView,UpdateView, DeleteView
-from .forms import PostForm, EditForm, CategoryForm
+from .forms import PostForm, EditForm, CategoryForm, AddCommentForm
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 from django.db.models import Q
@@ -30,9 +30,6 @@ def import_category(request):
 		# 	print('H')
 		# else:
 		# 	print('e')
-
-
-	
 
 		for data in imported_data:
 			value=Categories(
@@ -95,27 +92,6 @@ class CategoryListView(ListView):
 	model=Categories
 	template_name='Theblog/category_list.html'
 
-	# def get_context_data(request):
-	# 	if request.method=='POST':
-	# 		category_resource=CategoryResource()
-	# 		dataset=Dataset()
-	# 		new_category=request.FILES['myfile']
-
-	# 		if not new_category.endswith('xlsx'):
-	# 			messages.info(request,'Wrong file format')
-	# 			return render(request,'category_list.html')
-
-	# 		imported_data=dataset.load(new_category.read(),format='xlsx')
-			
-	# 		for data in imported_data:
-	# 			value=Post(
-	# 				data[0],
-	# 				data[1]
-	# 				)
-	# 			value.save()
-	# 	return render(request,'category_list.html')
-
-
 class ArticleDetailView(HitCountDetailView):
 	model = Post
 	template_name='Theblog/article_detail.html'
@@ -157,6 +133,7 @@ class CreateBlogView(CreateView):
 	form_class=PostForm
 	# fields='__all__'
 	template_name='Theblog/addblog.html'
+
 
 class CreateCategoryView(CreateView):
 	model = Categories

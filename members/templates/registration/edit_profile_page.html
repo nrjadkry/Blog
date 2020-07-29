@@ -1,0 +1,39 @@
+{% extends 'Theblog/base.html' %}
+
+{% block title %}
+    Edit Profile
+{% endblock title %}
+
+{% block content %}
+
+ {% if user.is_authenticated %}
+ 	{% if user.id == userprofile.user.id %}
+ 		
+ 	
+		<h1 class="Firstrow">Edit Profile</h1>
+		<br>
+		<div class="row Firstrow">
+			<div class="col-lg-6">
+				<div class="form-group">
+					<form method="POST" enctype="multipart/form-data">
+						{% csrf_token %}
+					
+					{{form.as_p}}
+					<button name="submit">Edit Profile</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		{% else %}
+			<br>
+	<strong>You can not edit others profile</strong>
+	{% endif %}
+
+
+{% else %}
+	<br>
+	<strong>You are restricted here.</strong>
+{% endif %}
+
+
+{% endblock content %}

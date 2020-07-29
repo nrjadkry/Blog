@@ -36,7 +36,7 @@ class Post(models.Model):
 	published_date=models.DateField(auto_now_add=True)
 	likes=models.ManyToManyField(User, related_name='blog_posts')
 	blog_views=models.IntegerField(default=0)
-	hit_count_generic=GenericRelation(HitCount, object_id_field='object_pk', related_query_name='hit_count_generic_relation')
+	# hit_count_generic=GenericRelation(HitCount, object_id_field='object_pk', related_query_name='hit_count_generic_relation')
 
 
 	def total_likes(self):
@@ -49,10 +49,13 @@ class Post(models.Model):
 		# return reverse('article_detail', args=(str(self.id)))
 		return reverse('home')
 
-class UserProfile(models.Model):
-	user=models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-	bio=models.TextField()
-	profile_picture=models.ImageField(null=True,blank=True,default='default.jpg', upload_to='images/')
+
+class Comment(models.Model):
+	post = models.ForeignKey(Post,related_name="comments", on_delete=models.CASCADE)
+	name=models.CharField(max_length=255)
+	body=models.TextField()
+	date_added=models.DateTimeField(auto_now_add=True)
 
 	def __str__(self):
-		return f'{self.user.username} Profile'
+		return '%s - %s' % (self.post.title + ' by '+ str(self.post.author), self.name)
+

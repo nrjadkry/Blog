@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Categories
+from .models import Post, Categories, Comment
 
 choices=Categories.objects.all().values().values_list('name','name')
 choice_list=[]
@@ -24,6 +24,11 @@ class PostForm(forms.ModelForm):
 
 
 		}
+
+class AddCommentForm(forms.ModelForm):
+	class Meta:
+		model=Comment 
+		fields=('name','body')
 
 class EditForm(forms.ModelForm):
 	class Meta:
